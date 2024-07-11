@@ -4,7 +4,7 @@ process.loadEnvFile()
 const port = process.env.PORT ?? 3008
 const morgan = require('morgan')
 const connectDB = require('./src/database.js')
-const Products = require('./src/product.js')
+const Product = require('./src/product.js')
 
 app.use(express.json())
 app.use(morgan('dev'))
@@ -17,13 +17,12 @@ app.get('/', (req, res) => {
 //Obtener todos los productos de la lista de precios
 app.get('/productos', async (req, res) => {
   const { categoria } = req.query
-  const query = !categoria ? {} : { categoria: { $regex: categoria, $options: 'i' } }
-
+  const query = !categoria ? {} : { genre: { $regex: categoria, $options: 'i' } }
   try {
-    const productos = await Products.find(query)
+    const productos = await Product.find(query)
     res.json(productos)
   } catch (error) {
-    res.status(500).send('Error al obtener todos los productos de la lista de precios')
+    res.status(500).send('Error al obtener los productos')
   }
 })
 
