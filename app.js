@@ -36,6 +36,19 @@ app.get("/productos/:id", async (req, res) => {
     .json({ message: "ID del producto no encontrado de la lista de precios" });
 });
 
+//Buscar un producto de la lista por nombre
+app.get("/productos/nombre/:nombre", async (req, res) => {
+  const { nombre } = req.params;
+  const query = !nombre ? {} : { nombre: { $regex: nombre, $options: "i" } };
+  try {
+    const productos = await Product.find(query);
+    res.json(productos);
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Error al obtener el nombre del producto");
+  }
+});
+
 //Agrega un nuevo producto a la lista
 app.post("/productos", async (req, res) => {
   const nuevoProducto = new Product(req.body);
@@ -46,22 +59,6 @@ app.post("/productos", async (req, res) => {
     return res
       .status(500)
       .json({ message: "Error al agregar el nuevo producto a la lista" });
-  }
-});
-
-//Borrar un producto existente por ID
-app.delete("/productos/:id", async (req, res) => {
-  const { id } = req.params;
-
-  try {
-    const producto = await Product.findByIdAndDelete(id);
-    if (producto) {
-      res.json({ message: "Producto eliminado" });
-    } else {
-      res.status(404).json({ message: "Producto no encontrado para eliminar" });
-    }
-  } catch (error) {
-    return res.status(500).send("Error al eliminar el producto de la lista");
   }
 });
 
@@ -81,6 +78,22 @@ app.put("/productos/:id", async (req, res) => {
     res.json(productoActualizado);
   } catch (error) {
     return res.status(500).json({ message: "Error al modificar el producto" });
+  }
+});
+
+//Borrar un producto existente por ID
+app.delete("/productos/:id", async (req, res) => {
+  const { id } = req.params;
+
+  try {
+    const producto = await Product.findByIdAndDelete(id);
+    if (producto) {
+      res.json({ message: "Producto eliminado" });
+    } else {
+      res.status(404).json({ message: "Producto no encontrado para eliminar" });
+    }
+  } catch (error) {
+    return res.status(500).send("Error al eliminar el producto de la lista");
   }
 });
 

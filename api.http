@@ -16,6 +16,9 @@ Content-Type: application/json
     
 }
 
+### Mostart los productos por nombre parcial
+GET http://localhost:3000/productos/nombre/caf
+
 ### Elimina un producto a la lista por ID
 DELETE http://localhost:3000/productos/66a822251a2d356b00e4f1ee
 
