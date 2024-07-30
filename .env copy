@@ -1,0 +1,4 @@
+PORT = 3000
+MONGODB_URLSTRING = mongodb+srv://usuario:password@database.12asdd.mongodb.net/
+DATABASE_NAME="SUPERMARKET"
+COLLECTION_NAME="products"
