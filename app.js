@@ -50,7 +50,7 @@ app.post("/productos", async (req, res) => {
 });
 
 //Borrar un producto existente por ID
-app.delete("/prodcutos/:id", async (req, res) => {
+app.delete("/productos/:id", async (req, res) => {
   const { id } = req.params;
 
   try {
@@ -61,22 +61,24 @@ app.delete("/prodcutos/:id", async (req, res) => {
       res.status(404).json({ message: "Producto no encontrado para eliminar" });
     }
   } catch (error) {
-    return res.status(500).send("Error al eliminar el prodcuto");
+    return res.status(500).send("Error al eliminar el producto de la lista");
   }
 });
 
-//Modificar un producto de la lista por si ID
+//Modificar un producto de la lista por su ID
 app.put("/productos/:id", async (req, res) => {
   const { id } = req.params;
   try {
     const productoActualizado = await Product.findByIdAndUpdate(id, req.body, {
       new: true,
+      runValidators: true,
     });
     if (!productoActualizado) {
       return res
         .status(404)
         .json({ message: "Producto a modificar no encontrado" });
     }
+    res.json(productoActualizado);
   } catch (error) {
     return res.status(500).json({ message: "Error al modificar el producto" });
   }

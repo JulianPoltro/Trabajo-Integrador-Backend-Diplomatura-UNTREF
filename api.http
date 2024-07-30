@@ -17,5 +17,15 @@ Content-Type: application/json
 }
 
 ### Elimina un producto a la lista por ID
-DELETE http://localhost:3000/productos/669059497f8aec4201660888
+DELETE http://localhost:3000/productos/66a822251a2d356b00e4f1ee
 
+### Modificar/Actualizar parcialmente
+PUT http://localhost:3000/productos/66a822241a2d356b00e4f1ec
+content-type: application/json
+
+{
+    "codigo": 4545,
+    "nombre": "Yerba Piporé",
+    "precio": 2950,
+    "categoria": "Infusiones"
+}
