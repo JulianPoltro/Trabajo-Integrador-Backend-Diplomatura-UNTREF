@@ -1,0 +1,21 @@
+### Muestra todos los articulos
+GET  http://localhost:3000/productos
+
+### Mostart un producto por id
+GET http://localhost:3000/productos/669059497f8aec420166088a
+
+### Agregar un producto a la lista
+POST http://localhost:3000/productos
+Content-Type: application/json
+
+{
+    "codigo": 8999,
+    "nombre": "Yerba Playadito",
+    "precio": 4500,
+    "categoria": "Infusiones"
+    
+}
+
+### Elimina un producto a la lista por ID
+DELETE http://localhost:3000/productos/669059497f8aec4201660888
+
