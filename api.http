@@ -1,8 +1,11 @@
-### Muestra todos los articulos
+### Muestra todos los articulos de la lista
 GET  http://localhost:3000/productos
 
-### Mostart un producto por id
+### Mostar un producto de la lista por id
 GET http://localhost:3000/productos/669059497f8aec420166088a
+
+### Mostart los productos por nombre parcial
+GET http://localhost:3000/productos/nombre/caf
 
 ### Agregar un producto a la lista
 POST http://localhost:3000/productos
@@ -16,12 +19,6 @@ Content-Type: application/json
     
 }
 
-### Mostart los productos por nombre parcial
-GET http://localhost:3000/productos/nombre/caf
-
-### Elimina un producto a la lista por ID
-DELETE http://localhost:3000/productos/66a822251a2d356b00e4f1ee
-
 ### Modificar/Actualizar parcialmente
 PUT http://localhost:3000/productos/66a822241a2d356b00e4f1ec
 content-type: application/json
@@ -32,3 +29,6 @@ content-type: application/json
     "precio": 2950,
     "categoria": "Infusiones"
 }
+
+### Elimina un producto a la lista por ID
+DELETE http://localhost:3000/productos/66a822251a2d356b00e4f1ee

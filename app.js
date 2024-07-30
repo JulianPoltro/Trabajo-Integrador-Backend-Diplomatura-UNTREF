@@ -20,6 +20,7 @@ app.get("/productos", async (req, res) => {
     const productos = await Product.find();
     res.json(productos);
   } catch (error) {
+    console.error(error);
     res
       .status(500)
       .send("Error al obtener los productos de la lista de precios");
@@ -29,17 +30,25 @@ app.get("/productos", async (req, res) => {
 //Obteniendo productos de la lista de precios por ID
 app.get("/productos/:id", async (req, res) => {
   const { id } = req.params;
-  const producto = await Product.findById(id);
-  if (producto) return res.json(producto);
-  res
-    .status(404)
-    .json({ message: "ID del producto no encontrado de la lista de precios" });
+  try {
+    const producto = await Product.findById(id);
+    if (producto) {
+      return res.json(producto);
+    }
+    res.status(404).json({
+      message: "ID del producto no encontrado de la lista de precios",
+    });
+  } catch (error) {
+    console.error(error);
+    res.status(500).send("Error al obtener el producto por ID");
+  }
 });
 
 //Buscar un producto de la lista por nombre
 app.get("/productos/nombre/:nombre", async (req, res) => {
   const { nombre } = req.params;
-  const query = !nombre ? {} : { nombre: { $regex: nombre, $options: "i" } };
+  const query = nombre ? { nombre: { $regex: nombre, $options: "i" } } : {};
+
   try {
     const productos = await Product.find(query);
     res.json(productos);
@@ -55,8 +64,9 @@ app.post("/productos", async (req, res) => {
   try {
     await nuevoProducto.save();
     res.status(201).json(nuevoProducto);
-  } catch {
-    return res
+  } catch (error) {
+    console.error(error);
+    res
       .status(500)
       .json({ message: "Error al agregar el nuevo producto a la lista" });
   }
@@ -77,6 +87,7 @@ app.put("/productos/:id", async (req, res) => {
     }
     res.json(productoActualizado);
   } catch (error) {
+    console.error(error);
     return res.status(500).json({ message: "Error al modificar el producto" });
   }
 });
@@ -93,6 +104,7 @@ app.delete("/productos/:id", async (req, res) => {
       res.status(404).json({ message: "Producto no encontrado para eliminar" });
     }
   } catch (error) {
+    console.error(error);
     return res.status(500).send("Error al eliminar el producto de la lista");
   }
 });
